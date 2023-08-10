@@ -6,6 +6,6 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "bader_idris",
+  "author": "bader idris",
   "license": "ISC"
 }
