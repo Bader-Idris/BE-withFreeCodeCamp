@@ -2,9 +2,9 @@
   "name": "be-with-free-code-camp",
   "version": "1.0.0",
   "description": "back end tasks provided by free code camp",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js"
   },
   "author": "Bader-Idris",
   "license": "ISC"
