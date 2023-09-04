@@ -192,4 +192,122 @@ Content-Length: 20
 name=John+Doe&age=25
 ```
 
-- 
+Note: `extended` is a configuration option that tells `body-parser` which parsing needs to be used. When `extended=false` it uses the classic encoding `querystring` library. When `extended=true` it uses `qs` library for parsing.
+
+When using `extended=false`, values can be only strings or arrays. The object returned when using querystring does not prototypically inherit from the default JavaScript `Object`, which means functions like `hasOwnProperty`, `toString` will not be available. The extended version allows more data flexibility, but it is outmatched by JSON.
+
+we can use both put-patch and post with same functionalities sometimes
+
+- post is originally for creating a req, and post-patch are for updating data.
+
+In this Fn we created, when dealing with GET v. we were using `req.query`, and with POST we deal with req.body. and we can use body with all other verbs excluding GET.
+
+```js
+
+const fAndlNames = (req, res) => {
+  // const { first: firstName, last: lastName } = req.query;// this works with GET v
+  const { first: firstName, last: lastName } = req.body;// this works with other than GET, as POST DELETE PATCH ...
+  res.json({
+    name: `${firstName} ${lastName}`
+  });
+}
+app.route('/name').get(fAndlNames).post(fAndlNames)
+```
+
+---
+
+## MongoDB && mongoose; models and DBs
+
+- don't forget to access freecodecamp.org website if you wanna test your progress with replit. each section has its own unique line to setup its environment
+- now, this project is interesting to look at its `server.js` file. especially because they've been setting it for testing purposes.
+- and we need to use our mongo atlas account.
+- to change the MONGO_URI passwd, go to security => database access => then find the edit in user ...
+- to access  MONGO_URI code, connect as if you're connecting to an npm package, and you'll find the button for it.
+- it's initial value with my created DB is:
+
+```sh
+mongodb+srv://Bader-Idris:<password>@nodeexpress4projectcour.ftyinui.mongodb.net/free_code_camp_projects?retryWrites=true&w=majority
+```
+
+- then add this to require the installed package and connect to the DB collections, and don't forget to change `<password>` pseudo
+
+```js
+const mongoose = require('mongoose');
+
+mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+```
+
+- this is my replit url [address:](https://boilerplate-mongomongoose.bader-iddeenidd.repl.co) to send to freeCodeCamp. **it worked well!**
+
+---
+
+### CRUD
+
+1. create
+2. read
+3. update
+4. delete
+
+#### create
+
+- we need a schema(similar to DATABASE in RDMSs)
+- collections == tables
+- documents == rows
+
+A model allows you to create instances of your objects, called documents.
+
+Replit is a real server, and in real servers, the interactions with the database happen in handler functions. These functions are executed when some event happens (e.g. someone hits an endpoint on your API).
+
+The `done()` function is a callback that tells us that we can proceed after completing an asynchronous operation such as inserting, searching, updating, or deleting. It's following the Node convention, and should be called as `done(null, data)` on success, or `done(err)` on error.
+
+example:
+
+```js
+const someFunc = function(done) {
+  //... do something (risky) ...
+  if (error) return done(error);
+  done(null, result);
+};
+```
+
+So we create this schema: `personSchema`
+then in the server do following:
+
+- A required `name` field of type `String`
+- An `age` field of type `Number`
+- A `favoriteFoods` field of type `[String]`; that means array accepts string, as in tsc
+
+> mongoose is built-in typescript, that's awesome
+
+then assign those to created Person variable as a `collection`
+
+```js
+const personSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: [true, 'Please provide name'],
+    maxlength: 50,
+  },
+  age: {
+    type: Number
+  },
+  favoriteFoods: {
+    type: [String]
+  }
+});
+const Person = mongoose.model("Person", personSchema);
+```
+
+sth
+
+#### read
+
+-
+
+#### update
+
+-
+
+#### delete
+
+-
