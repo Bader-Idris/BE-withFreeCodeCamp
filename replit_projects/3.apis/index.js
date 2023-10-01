@@ -1,9 +1,7 @@
-// index.js
-// where your node app starts
-
-// init project
-var express = require('express');
-var app = express();
+const express = require('express');
+require('dotenv').config();
+const campTests = require('./camp-tests.js');
+const app = express();
 
 // enable CORS (https://en.wikipedia.org/wiki/Cross-origin_resource_sharing)
 // so that your API is remotely testable by FCC 
@@ -24,7 +22,7 @@ app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
 });
 
-
+app.use('/api', campTests);
 
 // listen for requests :)
 var listener = app.listen(process.env.PORT, function () {
