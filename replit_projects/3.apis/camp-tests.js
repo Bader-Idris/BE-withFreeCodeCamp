@@ -18,21 +18,29 @@ const tendedResponse = (res) => {
 const UTCTimingAPI = (req, res) => {
   let strDate = req.params.date;
 
-  // if (strDate != ) return res.json({ error: "Invalid Date" })
-
   if (isNaN(Number(strDate))) {//2015-12-25
-    // check if this string is datable
+    let testTime = new Date(strDate)
+    if (testTime.toDateString() === 'Invalid Date') return res.json({ error: "Invalid Date" })
+
+
     numDate = strDate.toLocaleString('UTC')
     time = new Date(numDate)
     return tendedResponse(res)
   }
-  else {//1451001600000
-    //check if this number is datable!
+  else if (!isNaN(Number(strDate))) {//1451001600000
     numDate = Number(strDate);
     time = new Date(numDate)
     return tendedResponse(res)
   }
 };
 
+const UTCTimingAPICurrent = (req, res) => {
+  let strDate = new Date().getTime();
+  numDate = Number(strDate);
+  time = new Date(numDate)
+  return tendedResponse(res)
+};
+
+campTests.route('/').get(UTCTimingAPICurrent);
 campTests.route('/:date').get(UTCTimingAPI);
 module.exports = campTests;
