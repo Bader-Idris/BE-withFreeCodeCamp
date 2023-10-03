@@ -17,11 +17,6 @@ app.get("/", function (req, res) {
   res.sendFile(__dirname + '/views/index.html');
 });
 
-
-app.get("/api/hello", function (req, res) {
-  res.json({greeting: 'hello API'});
-});
-
 app.use('/api', campTests);
 
 const listener = app.listen(process.env.PORT, function () {
