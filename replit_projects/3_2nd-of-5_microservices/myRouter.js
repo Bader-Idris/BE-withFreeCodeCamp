@@ -9,7 +9,7 @@ const myRouter = (req, res) => {
   const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress 
   userAgent = req.get('User-Agent')
   res.json({
-    ipaddress: ip,
+    ipaddress: ip.split(',')[0],
     language: preferredLang,
     software: userAgent
   });
